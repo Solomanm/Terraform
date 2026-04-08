@@ -1,8 +1,17 @@
-provider "aws" {
-  region = "us-east-1"
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+      version = ">= 6.39.0"
+    }
+  }
 }
 
 resource "aws_instance" "myec2" {
-  ami = "ami-01b14b7ad41e17ba4"
-  instance_type = "t3.micro"
+  ami = var.ami
+  instance_type = var.instance_type
+}
+
+output "instance_id" {
+  value = aws_instance.myec2.id
 }
